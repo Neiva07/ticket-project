@@ -5,12 +5,12 @@ import { ModelsInterface } from "../interfaces/ModelsInterface";
 
 export interface UserAttributes extends Sequelize.Model<UserAttributes> {
   readonly id: number;
-  name?: string;
-  email?: string;
-  password?: string;
+  name: string;
+  email: string;
+  password: string;
   photo?: string;
-  created_at?: string;
-  updated_at?: string;
+  created_at: string;
+  updated_at: string;
   course?: string;
   degree?: string;
 }
@@ -63,6 +63,10 @@ export default (sequelize: Sequelize.Sequelize): UserModel => {
         type: Sequelize.STRING(128),
         allowNull: true,
         defaultValue: null
+      },
+      created_at: {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW
       }
     },
     {
