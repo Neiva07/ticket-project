@@ -67,6 +67,10 @@ export default (sequelize: Sequelize.Sequelize): UserModel => {
       created_at: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW
+      },
+      updated_at: {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW
       }
     },
     {
@@ -78,6 +82,12 @@ export default (sequelize: Sequelize.Sequelize): UserModel => {
         ): void => {
           const salt = genSaltSync();
           user.password = hashSync(user.password, salt);
+        },
+        afterUpdate: (
+          user: UserAttributes,
+          options: Sequelize.UpdateOptions
+        ): void => {
+          user.updated_at = Sequelize.NOW.toString();
         }
       }
     }
