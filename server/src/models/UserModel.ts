@@ -53,6 +53,16 @@ export default (sequelize: Sequelize.Sequelize): UserModel => {
         type: Sequelize.BLOB({ length: "long" }),
         allowNull: true,
         defaultValue: null
+      },
+      course: {
+        type: Sequelize.STRING(128),
+        allowNull: true,
+        defaultValue: null
+      },
+      degree: {
+        type: Sequelize.STRING(128),
+        allowNull: true,
+        defaultValue: null
       }
     },
     {
