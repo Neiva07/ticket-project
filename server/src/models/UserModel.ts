@@ -4,7 +4,7 @@ import { hashSync, genSaltSync, compareSync } from "bcryptjs";
 import { ModelsInterface } from "../interfaces/ModelsInterface";
 
 export interface UserAttributes extends Sequelize.Model<UserAttributes> {
-  id?: number;
+  readonly id: number;
   name?: string;
   email?: string;
   password?: string;
