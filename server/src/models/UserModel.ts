@@ -31,7 +31,8 @@ export default (sequelize: Sequelize.Sequelize): UserModel => {
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        unique: true
       },
       name: {
         type: Sequelize.STRING(128),
