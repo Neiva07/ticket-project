@@ -13,6 +13,7 @@ export interface UserAttributes extends Sequelize.Model<UserAttributes> {
   updated_at: string;
   course?: string;
   degree?: string;
+  tickets?: number;
 }
 
 export interface UserInstance extends Sequelize.Model<UserAttributes> {
@@ -23,54 +24,57 @@ export type UserModel = typeof Sequelize.Model & {
   new (values?: object, options?: Sequelize.BuildOptions): UserInstance;
 } & BaseModalInterface;
 
-export default (sequelize: Sequelize.Sequelize): UserModel => {
+export default (
+  sequelize: Sequelize.Sequelize,
+  DataTypes: typeof Sequelize.DataTypes
+): UserModel => {
   const User = <UserModel>sequelize.define(
     "User",
     {
       id: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
         unique: true
       },
       name: {
-        type: Sequelize.STRING(128),
+        type: DataTypes.STRING(128),
         allowNull: false
       },
       email: {
-        type: Sequelize.STRING(128),
+        type: DataTypes.STRING(128),
         allowNull: false,
         unique: true
       },
       password: {
-        type: Sequelize.STRING(128),
+        type: DataTypes.STRING(128),
         allowNull: false,
         validate: {
           notEmpty: true
         }
       },
       photo: {
-        type: Sequelize.BLOB({ length: "long" }),
+        type: DataTypes.BLOB({ length: "long" }),
         allowNull: true,
         defaultValue: null
       },
       course: {
-        type: Sequelize.STRING(128),
+        type: DataTypes.STRING(128),
         allowNull: true,
         defaultValue: null
       },
       degree: {
-        type: Sequelize.STRING(128),
+        type: DataTypes.STRING(128),
         allowNull: true,
         defaultValue: null
       },
       created_at: {
-        type: Sequelize.DATE,
+        type: DataTypes.DATE,
         defaultValue: Sequelize.NOW
       },
       updated_at: {
-        type: Sequelize.DATE,
+        type: DataTypes.DATE,
         defaultValue: Sequelize.NOW
       }
     },
@@ -99,6 +103,13 @@ export default (sequelize: Sequelize.Sequelize): UserModel => {
   ): boolean => {
     return compareSync(password, encodedPassowrd);
   };
-  User.associate = (models: ModelsInterface): void => {};
+  User.associate = (models: ModelsInterface): void => {
+    User.hasMany(models.Ticket, {
+      foreignKey: {
+        field: "tickets",
+        name: "tickets"
+      }
+    });
+  };
   return User;
 };
