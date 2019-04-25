@@ -5,8 +5,8 @@ import { ModelsInterface } from "../interfaces/ModelsInterface";
 export interface TicketAttributes extends Sequelize.Model<TicketAttributes> {
   readonly id: number;
   readonly created_at: string;
-  readonly bought_by: string; //isn't string, user
-  owner: string; //isn't string, user
+  readonly bought_by: number; //save only the id of the User.
+  owner: number; //save only the id of the User.
   readonly qr_code: string;
   updated_at: string;
 }
@@ -60,12 +60,28 @@ export default (
       }
     }
   );
+
   Ticket.prototype.checkQRCode = (
     clientQRCode: string,
     databaseQRCode: string
   ): boolean => {
     return clientQRCode === databaseQRCode;
   };
-  Ticket.associate = (models: ModelsInterface): void => {};
+  Ticket.associate = (models: ModelsInterface): void => {
+    Ticket.belongsTo(models.User, {
+      foreignKey: {
+        allowNull: false,
+        field: "owner",
+        name: "owner"
+      }
+    });
+    Ticket.belongsTo(models.User, {
+      foreignKey: {
+        allowNull: false,
+        field: "bought_by",
+        name: "bought_by"
+      }
+    });
+  };
   return Ticket;
 };
