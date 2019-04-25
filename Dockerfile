@@ -1,8 +1,10 @@
 FROM node:8-slim
 
-WORKDIR /server
+WORKDIR /app
 
-COPY . /server
+COPY . /app
+
+WORKDIR /app/server
 RUN npm install\
     && yarn build-ts
 
