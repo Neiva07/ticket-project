@@ -3,7 +3,7 @@ An easy solution to shop tickets
 
 ## **To run in developer mode:**
 1. Clone the repository
-2. Install Docker and Docker-compose 
+2. Install Docker and Docker-compose:  
 
    Installing the latest stable release for Docker on Ubuntu:  
     `sudo curl -sSL https://get.docker.com/ | sh`
