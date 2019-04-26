@@ -8,3 +8,14 @@ services:
     build: .
     volumes:
       - ./server/src:/app/server/src
+    networks:
+      - ticket-network
+  mysql:
+    image: mysql:8
+    restart: always
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - ticket-network
+networks:
+  ticket-network:
