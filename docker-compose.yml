@@ -10,6 +10,8 @@ services:
       - ./server/src:/app/server/src
     networks:
       - ticket-network
+    depends_on:
+      - mysql
   mysql:
     image: mysql:8
     restart: always
