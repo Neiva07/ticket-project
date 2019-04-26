@@ -17,5 +17,7 @@ services:
       - mysql-data:/var/lib/mysql
     networks:
       - ticket-network
+volumes:
+  mysql-data:
 networks:
   ticket-network:
