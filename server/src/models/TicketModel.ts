@@ -36,26 +36,12 @@ export default (
         type: DataTypes.STRING(128),
         allowNull: false,
         unique: true
-      },
-      created_at: {
-        type: DataTypes.DATE,
-        defaultValue: Sequelize.NOW
-      },
-      updated_at: {
-        type: DataTypes.DATE,
-        defaultValue: Sequelize.NOW
       }
     },
     {
       tableName: "tickets",
       hooks: {
-        beforeCreate: (): void => {},
-        afterUpdate: (
-          ticket: TicketAttributes,
-          options: Sequelize.UpdateOptions
-        ): void => {
-          ticket.updated_at = Sequelize.NOW.toString();
-        }
+        beforeCreate: (): void => {}
       }
     }
   );
@@ -66,14 +52,6 @@ export default (
   ): boolean => {
     return clientQRCode === databaseQRCode;
   };
-  Ticket.associate = (models: ModelsInterface): void => {
-    Ticket.belongsTo(models.User, {
-      foreignKey: {
-        allowNull: false,
-        field: "bought_by",
-        name: "bought_by"
-      }
-    });
-  };
+
   return Ticket;
 };

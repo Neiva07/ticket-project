@@ -9,8 +9,6 @@ export interface UserAttributes extends Sequelize.Model<UserAttributes> {
   email: string;
   password: string;
   photo?: string;
-  created_at: string;
-  updated_at: string;
   course?: string;
   degree?: string;
   tickets?: number;
@@ -68,14 +66,6 @@ export default (
         type: DataTypes.STRING(128),
         allowNull: true,
         defaultValue: null
-      },
-      created_at: {
-        type: DataTypes.DATE,
-        defaultValue: Sequelize.NOW
-      },
-      updated_at: {
-        type: DataTypes.DATE,
-        defaultValue: Sequelize.NOW
       }
     },
     {
@@ -87,12 +77,6 @@ export default (
         ): void => {
           const salt = genSaltSync();
           user.password = hashSync(user.password, salt);
-        },
-        afterUpdate: (
-          user: UserAttributes,
-          options: Sequelize.UpdateOptions
-        ): void => {
-          user.updated_at = Sequelize.NOW.toString();
         }
       }
     }
