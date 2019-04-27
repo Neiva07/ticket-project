@@ -39,10 +39,7 @@ export default (
       }
     },
     {
-      tableName: "tickets",
-      hooks: {
-        beforeCreate: (): void => {}
-      }
+      tableName: "tickets"
     }
   );
 
