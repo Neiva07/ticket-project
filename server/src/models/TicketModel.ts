@@ -26,11 +26,11 @@ export default (
     "Ticket",
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
-        autoIncrement: true,
-        unique: true
+        unique: true,
+        defaultValue: DataTypes.UUIDV4
       },
       qr_code: {
         type: DataTypes.STRING(128),
