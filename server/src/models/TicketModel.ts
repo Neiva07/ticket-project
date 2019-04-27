@@ -6,7 +6,6 @@ export interface TicketAttributes extends Sequelize.Model<TicketAttributes> {
   readonly id: number;
   readonly created_at: string;
   readonly bought_by: number; //save only the id of the User.
-  owner: number; //save only the id of the User.
   readonly qr_code: string;
   updated_at: string;
 }
@@ -68,13 +67,6 @@ export default (
     return clientQRCode === databaseQRCode;
   };
   Ticket.associate = (models: ModelsInterface): void => {
-    Ticket.belongsTo(models.User, {
-      foreignKey: {
-        allowNull: false,
-        field: "owner",
-        name: "owner"
-      }
-    });
     Ticket.belongsTo(models.User, {
       foreignKey: {
         allowNull: false,
