@@ -8,3 +8,20 @@ services:
     build: .
     volumes:
       - ./server/src:/app/server/src
+    networks:
+      - ticket-network
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:8
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - ticket-network
+volumes:
+  mysql-data:
+networks:
+  ticket-network:
