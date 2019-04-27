@@ -1,8 +1,11 @@
 import * as http from "http";
 import app from "./app";
+import db from "./models";
 
 const server = http.createServer(app);
 
-server.listen(3000);
+db.sequelize.sync().then(() => {
+  server.listen(3000);
 
-server.on("listening", () => console.log("Listening on port x"));
+  server.on("listening", () => console.log("Listening on port x"));
+});
