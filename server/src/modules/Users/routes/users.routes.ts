@@ -6,14 +6,14 @@ export default (app: Application) => {
   // .all(policies.isAllowed)
   // .get(users.read) not sure if should exist
   // .put(users.edit) change the profile when already loged in
-  // .delete(users.delete) not sure how should works (maybe just the login and maintain the data -- changing status to deactivated)
+  // .delete(users.delete) not sure how should work (maybe just the login and maintain the data -- changing status to deactivated)
 
   //admin permission (initially unless)
   app.route("/api/users");
   // .all(polices.isAllowed)
   // .get(users.allUsers)
 
-  app.route("/api/v1/signup").post(validations.signup, authentication.signup);
-  app.route("/api/v1/signin").post(validations.signin, authentication.signin);
+  // app.route("/api/v1/signup").post(validations.signup, authentication.signup);
+  // app.route("/api/v1/signin").post(validations.signin, authentication.signin);
   // app.param("userId", users.userById)
 };
