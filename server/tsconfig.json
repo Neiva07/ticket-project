@@ -12,7 +12,7 @@
       "@models/*": ["./src/models/*"],
       "@utils/*": ["./src/utils/*"],
       "@modules/*": ["./src/modules/*"],
-      "@types/*": ["./src/interfaces/*"]
+      "@interfaces/*": ["./src/interfaces/*"]
     }
   },
   "include": ["src/**/*"],
