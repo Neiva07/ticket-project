@@ -12,15 +12,17 @@ export interface UserAttributes extends Sequelize.Model<UserAttributes> {
   course?: string;
   degree?: string;
   tickets?: number;
+  enrollment_number: number;
 }
 
-export interface UserInstance extends Sequelize.Model<UserAttributes> {
+export interface UserInstance extends UserAttributes {
   isPassword: (password: string, encodedPassword: string) => boolean;
 }
 
 export type UserModel = typeof Sequelize.Model & {
-  new (values?: object, options?: Sequelize.BuildOptions): UserInstance;
-} & BaseModalInterface;
+  new (values?: object, options?: Sequelize.BuildOptions): UserModel;
+} & BaseModalInterface &
+  UserInstance;
 
 export default (
   sequelize: Sequelize.Sequelize,
@@ -66,6 +68,11 @@ export default (
         type: DataTypes.STRING(128),
         allowNull: true,
         defaultValue: null
+      },
+      enrollment_number: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        unique: true
       }
     },
     {
