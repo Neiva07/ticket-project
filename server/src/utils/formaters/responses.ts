@@ -1,6 +1,6 @@
 import { Response } from "express";
-import { Codes } from "@utils/constants/codes";
-import { HttpStatus } from "@utils/constants/httpStatus";
+import { Codes } from "../constants/codes";
+import { HttpStatus } from "../constants/httpStatus";
 
 /**
  * A function that encapsuled the error data to send to client

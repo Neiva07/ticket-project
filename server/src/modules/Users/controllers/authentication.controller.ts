@@ -1,13 +1,17 @@
 import passport from "passport";
 //create this file
-import * as ErrorHandler from "@utils/errorHandler";
-import { HttpStatus } from "@utils/constants/httpStatus";
+import * as ErrorHandler from "../../../utils/errorHandler";
+import { HttpStatus } from "../../../utils/constants/httpStatus";
 import { Request, Response, NextFunction } from "express";
-import { Codes } from "@utils/constants/codes";
-import * as responses from "@utils/formaters/responses";
-import db from "@models/index";
-import { UserModel, UserAttributes, UserInstance } from "@models/UserModel";
-import { configureUserAndToken } from "@utils/strategies/jwt";
+import { Codes } from "../../../utils/constants/codes";
+import * as responses from "../../../utils/formaters/responses";
+import db from "../../../models/index";
+import {
+  UserModel,
+  UserAttributes,
+  UserInstance
+} from "../../../models/UserModel";
+import { configureUserAndToken } from "../../../utils/strategies/jwt";
 import { QueryInterface } from "sequelize/types";
 
 export const signup = async (req: Request, res: Response) => {
@@ -42,10 +46,9 @@ export const signin = async (req: Request, res: Response) => {
         message,
         HttpStatus.UNPROCESSABLE_ENTITY
       );
-      const data = configureUserAndToken(user);
-      return responses.sendSuccessful(res, data, HttpStatus.OK);
     }
-    return responses.sendSuccessful(res, user, HttpStatus.OK);
+    const data = configureUserAndToken(user);
+    return responses.sendSuccessful(res, data, HttpStatus.OK);
   } catch (err) {
     const {
       code,
@@ -54,4 +57,7 @@ export const signin = async (req: Request, res: Response) => {
     } = ErrorHandler.getErrorMessageCodeAndHttpStatus(err);
     responses.sendError(res, code, message, status);
   }
+};
+export const ola = (req: Request, res: Response) => {
+  res.json({ ola: "ola" });
 };

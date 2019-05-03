@@ -1,11 +1,14 @@
 import * as http from "http";
 import app from "./app";
 import db from "./models";
+require("dotenv").config(".env");
 
 const server = http.createServer(app);
 
 db.sequelize.sync().then(() => {
   server.listen(3000);
 
-  server.on("listening", () => console.log("Listening on port x"));
+  server.on("listening", () => {
+    console.log("Listening on port x");
+  });
 });

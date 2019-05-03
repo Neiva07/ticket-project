@@ -6,14 +6,7 @@
     "preserveConstEnums": true,
     "outDir": "dist",
     "sourceMap": true,
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
-    "paths": {
-      "@models/*": ["./src/models/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@modules/*": ["./src/modules/*"],
-      "@interfaces/*": ["./src/interfaces/*"]
-    }
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]

@@ -1,6 +1,6 @@
-import { ErrorHandler } from "@interfaces/errorHandler";
-import { Codes } from "@utils/constants/codes";
-import { HttpStatus } from "@utils/constants/httpStatus";
+import { ErrorHandler } from "../interfaces/errorHandler";
+import { Codes } from "./constants/codes";
+import { HttpStatus } from "./constants/httpStatus";
 
 interface ErrorMessageCodeAndHttpStatus {
   code: Codes;

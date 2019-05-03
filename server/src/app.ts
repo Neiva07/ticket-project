@@ -1,24 +1,23 @@
 import * as express from "express";
+import userRoutes from "./modules/Users/routes/users.routes";
+import * as cors from "cors";
+import * as bodyParser from "body-parser";
 
 class App {
   public express: express.Application;
 
   constructor() {
     this.express = express();
+
     this.middleware();
   }
 
   private middleware(): void {
-    this.express.use(
-      "/hello",
-      (
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction
-      ) => {
-        res.send("<p>matheus otário</p>");
-      }
-    );
+    this.express.use(bodyParser.json());
+
+    this.express.use(cors());
+
+    userRoutes(this.express);
   }
 }
 

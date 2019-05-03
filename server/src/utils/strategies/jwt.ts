@@ -1,10 +1,14 @@
 import { Request, Response, NextFunction } from "express";
-import { UserModel, UserInstance, UserAttributes } from "@models/UserModel";
+import {
+  UserModel,
+  UserInstance,
+  UserAttributes
+} from "../../models/UserModel";
 import { Strategy, ExtractJwt } from "passport-jwt";
 import * as jwt from "jsonwebtoken";
 import passport from "passport";
-import db from "@models/index";
-import { ErrorHandler } from "@interfaces/errorHandler";
+import db from "../../models/index";
+import { ErrorHandler } from "../../interfaces/errorHandler";
 
 // Setup work and export for the JWT passport strategy
 export default function() {
@@ -51,7 +55,7 @@ export function configureUserAndToken(
 
   // return user and token
   return {
-    user: user,
+    user,
     token
   };
 }
