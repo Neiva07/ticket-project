@@ -13,7 +13,11 @@ export default (app: Application) => {
   // .all(polices.isAllowed)
   // .get(users.allUsers)
 
-  // app.route("/api/v1/signup").post(validations.signup, authentication.signup);
-  // app.route("/api/v1/signin").post(validations.signin, authentication.signin);
+  app
+    .route("/api/v1/signup")
+    .post(/*validations.signup,*/ authentication.signup);
+  app
+    .route("/api/v1/signin")
+    .post(/*validations.signin, */ authentication.signin);
   // app.param("userId", users.userById)
 };
