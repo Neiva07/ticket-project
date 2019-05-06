@@ -30,6 +30,7 @@ export enum Codes {
   AUTH__INVALID_EMAIL = "auth/invalid-email",
   AUTH__INVALID_USERNAME_FORMAT = "auth/invalid-username-format",
   AUTH__USER_NOT_AUTHORIZED = "auth/user-not_authorized",
+  AUTH__UNFILLED_FIELD = "auth/unfilled_field"
   //
   // Unexpected authorization error
   AUTH__UNEXPECTED_AUTHORIZATION = "auth/unexpected-authorization",
