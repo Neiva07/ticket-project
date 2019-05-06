@@ -1,5 +1,6 @@
 import { Application } from "express";
 import * as authentication from "../controllers/authentication.controller";
+import * as validations from "../validations/user.validations";
 
 export default (app: Application) => {
   app.route("/:userId");
@@ -13,7 +14,7 @@ export default (app: Application) => {
   // .all(polices.isAllowed)
   // .get(users.allUsers)
 
-  app.route("/signup").post(/*validations.signup,*/ authentication.signup);
-  app.route("/signin").post(/*validations.signin, */ authentication.signin);
+  app.route("/signup").post(validations.signup, authentication.signup);
+  app.route("/signin").post(validations.signin, authentication.signin);
   // app.param("userId", users.userById)
 };

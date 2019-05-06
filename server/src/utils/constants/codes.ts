@@ -5,6 +5,7 @@ export enum Codes {
   // Thrown if there is no user corresponding to the given param (username, userId, email)
   AUTH__USER_NOT_FOUND = "auth/user-not-found",
   AUTH__WRONG_PASSWORD = "auth/wrong-password",
+  AUTH__INVALID_ENROLLMENT_NUMBER = "auth/invalid-enrollment-number",
   // Thrown if the passowrd is not strong enough.
   AUTH__WEAK_PASSWORD = "auth/weak-password",
   AUTH__BLACKLIST_PASSWORD = "auth/blacklist-password",
@@ -30,7 +31,7 @@ export enum Codes {
   AUTH__INVALID_EMAIL = "auth/invalid-email",
   AUTH__INVALID_USERNAME_FORMAT = "auth/invalid-username-format",
   AUTH__USER_NOT_AUTHORIZED = "auth/user-not_authorized",
-  AUTH__UNFILLED_FIELD = "auth/unfilled_field"
+  AUTH__UNFILLED_FIELD = "auth/unfilled_field",
   //
   // Unexpected authorization error
   AUTH__UNEXPECTED_AUTHORIZATION = "auth/unexpected-authorization",
