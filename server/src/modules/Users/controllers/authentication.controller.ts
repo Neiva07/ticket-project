@@ -6,23 +6,42 @@ import { Request, Response, NextFunction } from "express";
 import { Codes } from "../../../utils/constants/codes";
 import * as responses from "../../../utils/formaters/responses";
 import db from "../../../models/index";
+import { Op } from "sequelize";
 import {
   UserModel,
   UserAttributes,
   UserInstance
 } from "../../../models/UserModel";
 import { configureUserAndToken } from "../../../utils/strategies/jwt";
-import { QueryInterface } from "sequelize/types";
 
 export const signup = async (req: Request, res: Response) => {
   //security measurements
   req.body.role = undefined;
 
   try {
-    const user = <UserAttributes>await db.User.create(req.body);
-    const data = configureUserAndToken(user);
+    const newuser = req.body;
 
-    return responses.sendSuccessful(res, data, HttpStatus.OK);
+    const userAlreadyRegister = await db.User.findOne({
+      where: {
+        [Op.or]: [
+          { email: newuser.email },
+          { enrollment_number: newuser.enrollment_number }
+        ]
+      }
+    });
+    if (userAlreadyRegister) {
+      return responses.sendError(
+        res,
+        Codes.AUTH__UNIQUE_ALREADY_IN_USE,
+        "Email or Enrollment Number invalid",
+        HttpStatus.NOT_ACCEPTABLE
+      );
+    } else {
+      const user = <UserAttributes>await db.User.create(newuser);
+
+      const data = configureUserAndToken(user);
+      return responses.sendSuccessful(res, data, HttpStatus.OK);
+    }
   } catch (err) {
     const {
       code,
