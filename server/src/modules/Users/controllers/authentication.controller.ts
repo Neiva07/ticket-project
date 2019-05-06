@@ -66,6 +66,7 @@ export const signin = async (req: Request, res: Response) => {
 
   try {
     const user = await db.User.findOne({ where: { enrollment_number } });
+
     if (!user) {
       const message = "Could not find any user with that Enrollment Number";
       return responses.sendError(
@@ -74,9 +75,16 @@ export const signin = async (req: Request, res: Response) => {
         message,
         HttpStatus.UNPROCESSABLE_ENTITY
       );
-    }
-    const data = configureUserAndToken(user);
-    return responses.sendSuccessful(res, data, HttpStatus.OK);
+    } else if (user.isPassword(password, user.password)) {
+      const data = configureUserAndToken(user);
+      return responses.sendSuccessful(res, data, HttpStatus.OK);
+    } else
+      return responses.sendError(
+        res,
+        Codes.AUTH__WRONG_PASSWORD,
+        "Wrong password. try again",
+        HttpStatus.UNAUTHORIZED
+      );
   } catch (err) {
     const {
       code,

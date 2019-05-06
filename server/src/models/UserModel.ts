@@ -89,8 +89,8 @@ export default (
     }
   );
   User.prototype.isPassword = (
-    encodedPassowrd: string,
-    password: string
+    password: string,
+    encodedPassowrd: string
   ): boolean => {
     return compareSync(password, encodedPassowrd);
   };
