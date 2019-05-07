@@ -65,5 +65,10 @@ export enum Codes {
   /**
    * Models
    */
-  USER__NOT_FOUND = "user/not-found"
+  USER__NOT_FOUND = "user/not-found",
+
+  /**
+   * Tickets
+   */
+  TICKET_NOT_FOUND = "ticket/not-found"
 }

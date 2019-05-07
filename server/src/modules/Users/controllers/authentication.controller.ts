@@ -21,15 +21,6 @@ export const signup = async (req: Request, res: Response) => {
   try {
     const newuser = req.body;
 
-    if (!newuser.course || !newuser.degree) {
-      return responses.sendError(
-        res,
-        Codes.AUTH__UNFILLED_FIELD,
-        "Missing course information. please fill all mandatory fields",
-        HttpStatus.NOT_ACCEPTABLE
-      );
-    }
-
     const userAlreadyRegister = await db.User.findOne({
       where: {
         [Op.or]: [
