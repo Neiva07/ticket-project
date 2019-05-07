@@ -75,7 +75,7 @@ export default (
         defaultValue: null
       },
       enrollment_number: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(128),
         allowNull: false,
         unique: true
       }

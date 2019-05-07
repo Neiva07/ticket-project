@@ -19,14 +19,34 @@ export const edit = [
 
 export const signup = [
   body("enrollment_number")
-    .not()
     .matches(/^[0-9]+$/)
+    .withMessage(() => ({
+      status: HttpStatus.UNPROCESSABLE_ENTITY,
+      code: Codes.AUTH__INVALID_ENROLLMENT_NUMBER,
+      message: "Must have only numbers"
+    }))
     .isLength({ min: 12, max: 12 })
     .withMessage(() => ({
       status: HttpStatus.UNPROCESSABLE_ENTITY,
       code: Codes.AUTH__INVALID_ENROLLMENT_NUMBER,
       message: "Invalid Enrollment Number. The field must have 12 numbers."
     })),
+  body("first_name")
+    .not()
+    .matches(/\d/)
+    .optional()
+    .withMessage("First name cannot contain numbers!")
+    .not()
+    .isEmpty()
+    .withMessage("Should not be empty"),
+  body("last_name")
+    .not()
+    .matches(/\d/)
+    .optional()
+    .withMessage("Last name cannot contain numbers!")
+    .not()
+    .isEmpty()
+    .withMessage("Should not be empty"),
   body("email")
     .isEmail()
     .withMessage(() => ({
@@ -36,8 +56,6 @@ export const signup = [
     })),
   body("password")
     .isLength({ min: 6 })
-    .not()
-    .isEmpty()
     .withMessage(() => ({
       status: HttpStatus.UNPROCESSABLE_ENTITY,
       code: Codes.AUTH__WEAK_PASSWORD,
@@ -73,7 +91,7 @@ export const signin = [
       code: Codes.AUTH__INVALID_EMAIL,
       message: "The email you passed is not a valid one"
     }),
-  // password must be at least 5 chars long
+  // password must be at least 6 chars long
   body("password")
     .not()
     .isEmpty()
@@ -87,12 +105,12 @@ export const signin = [
   middlewareValidation
 ];
 export const changePassword = [
-  // username must be an email
+  // username must be an email or enrollment number
   body("currentPassword")
     .not()
     .isEmpty()
     .withMessage("should not be empty"),
-  // password must be at least 5 chars long
+  // password must be at least 6 chars long
   body("newPassword")
     .isLength({ min: 6 })
     .withMessage({
@@ -103,7 +121,6 @@ export const changePassword = [
     .not()
     .isEmpty()
     .withMessage("should not be empty"),
-  // password must be at least 5 chars long
   body("verifyPassword")
     .not()
     .isEmpty()

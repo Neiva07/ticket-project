@@ -4,11 +4,11 @@ import db from "./models";
 require("dotenv").config(".env");
 
 const server = http.createServer(app);
-
+const PORT = 3003;
 db.sequelize.sync().then(() => {
-  server.listen(3000);
+  server.listen(PORT);
 
   server.on("listening", () => {
-    console.log("Listening on port x");
+    console.log(`Listening on port ${PORT}`);
   });
 });

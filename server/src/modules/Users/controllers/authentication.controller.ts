@@ -42,7 +42,7 @@ export const signup = async (req: Request, res: Response) => {
       return responses.sendError(
         res,
         Codes.AUTH__UNIQUE_ALREADY_IN_USE,
-        "Email or Enrollment Number invalid",
+        "Email or Enrollment Number already taken",
         HttpStatus.NOT_ACCEPTABLE
       );
     } else {
