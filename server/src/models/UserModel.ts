@@ -5,7 +5,8 @@ import { ModelsInterface } from "../interfaces/ModelsInterface";
 
 export interface UserAttributes extends Sequelize.Model<UserAttributes> {
   readonly id: number;
-  name: string;
+  first_name: string;
+  last_name: string;
   email: string;
   password: string;
   photo?: string;
@@ -38,7 +39,11 @@ export default (
         defaultValue: DataTypes.UUIDV4,
         unique: true
       },
-      name: {
+      first_name: {
+        type: DataTypes.STRING(128),
+        allowNull: false
+      },
+      last_name: {
         type: DataTypes.STRING(128),
         allowNull: false
       },
@@ -70,7 +75,7 @@ export default (
         defaultValue: null
       },
       enrollment_number: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(128),
         allowNull: false,
         unique: true
       }
@@ -97,8 +102,14 @@ export default (
   User.associate = (models: ModelsInterface): void => {
     User.hasMany(models.Ticket, {
       foreignKey: {
-        field: "tickets",
-        name: "tickets"
+        field: "owner",
+        name: "owner"
+      }
+    });
+    User.hasMany(models.Ticket, {
+      foreignKey: {
+        field: "buyer",
+        name: "buyer"
       }
     });
   };

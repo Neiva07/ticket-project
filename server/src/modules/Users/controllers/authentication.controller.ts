@@ -7,11 +7,7 @@ import { Codes } from "../../../utils/constants/codes";
 import * as responses from "../../../utils/formaters/responses";
 import db from "../../../models/index";
 import { Op } from "sequelize";
-import {
-  UserModel,
-  UserAttributes,
-  UserInstance
-} from "../../../models/UserModel";
+import { UserAttributes } from "../../../models/UserModel";
 import { configureUserAndToken } from "../../../utils/strategies/jwt";
 
 export const signup = async (req: Request, res: Response) => {
@@ -20,15 +16,6 @@ export const signup = async (req: Request, res: Response) => {
 
   try {
     const newuser = req.body;
-
-    if (!newuser.course || !newuser.degree) {
-      return responses.sendError(
-        res,
-        Codes.AUTH__UNFILLED_FIELD,
-        "Missing course information. please fill all mandatory fields",
-        HttpStatus.NOT_ACCEPTABLE
-      );
-    }
 
     const userAlreadyRegister = await db.User.findOne({
       where: {
@@ -42,7 +29,7 @@ export const signup = async (req: Request, res: Response) => {
       return responses.sendError(
         res,
         Codes.AUTH__UNIQUE_ALREADY_IN_USE,
-        "Email or Enrollment Number invalid",
+        "Email or Enrollment Number already taken",
         HttpStatus.NOT_ACCEPTABLE
       );
     } else {
@@ -57,7 +44,7 @@ export const signup = async (req: Request, res: Response) => {
       message,
       status
     } = ErrorHandler.getErrorMessageCodeAndHttpStatus(err);
-    responses.sendError(res, code, message, status);
+    return responses.sendError(res, code, message, status);
   }
 };
 
@@ -68,7 +55,7 @@ export const signin = async (req: Request, res: Response) => {
     const user = await db.User.findOne({ where: { enrollment_number } });
 
     if (!user) {
-      const message = "Could not find any user with that Enrollment Number";
+      const message = "No user found with this Enrollment Number";
       return responses.sendError(
         res,
         Codes.AUTH__USER_NOT_FOUND,
@@ -91,9 +78,31 @@ export const signin = async (req: Request, res: Response) => {
       message,
       status
     } = ErrorHandler.getErrorMessageCodeAndHttpStatus(err);
-    responses.sendError(res, code, message, status);
+    return responses.sendError(res, code, message, status);
   }
 };
-export const ola = (req: Request, res: Response) => {
-  res.json({ ola: "ola" });
+export const read = async (res: Response, req: Request) => {
+  console.log(req.body);
+  try {
+    const user = await db.User.findOne({
+      where: { enrollment_number: req.body.enrollment_number }
+    });
+    if (!user) {
+      responses.sendError(
+        res,
+        Codes.USER__NOT_FOUND,
+        "user not founded",
+        HttpStatus.UNPROCESSABLE_ENTITY
+      );
+    } else {
+      return responses.sendSuccessful(res, user, HttpStatus.OK);
+    }
+  } catch (err) {
+    const {
+      code,
+      message,
+      status
+    } = ErrorHandler.getErrorMessageCodeAndHttpStatus(err);
+    return responses.sendError(res, code, message, status);
+  }
 };

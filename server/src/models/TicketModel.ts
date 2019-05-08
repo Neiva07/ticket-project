@@ -10,13 +10,14 @@ export interface TicketAttributes extends Sequelize.Model<TicketAttributes> {
   updated_at: string;
 }
 
-export interface TicketInstance extends Sequelize.Model<TicketAttributes> {
+export interface TicketInstance extends TicketAttributes {
   checkQRCode: (clientQRCode: string, databaseQRCode: string) => boolean;
 }
 
 export type TicketModel = typeof Sequelize.Model & {
-  new (values?: object, options?: Sequelize.BuildOptions): TicketInstance;
-} & BaseModalInterface;
+  new (values?: object, options?: Sequelize.BuildOptions): TicketModel;
+} & BaseModalInterface &
+  TicketInstance;
 
 export default (
   sequelize: Sequelize.Sequelize,
@@ -48,6 +49,20 @@ export default (
     databaseQRCode: string
   ): boolean => {
     return clientQRCode === databaseQRCode;
+  };
+  Ticket.associate = (models: ModelsInterface): void => {
+    Ticket.belongsTo(models.User, {
+      foreignKey: {
+        field: "user",
+        name: "user"
+      }
+    });
+    Ticket.belongsTo(models.User, {
+      foreignKey: {
+        field: "bought_by",
+        name: "bought_by"
+      }
+    });
   };
 
   return Ticket;

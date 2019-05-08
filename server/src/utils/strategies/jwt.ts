@@ -46,7 +46,8 @@ export function configureUserAndToken(
   const tokenUser = {
     email: user.email,
     photo: user.photo,
-    name: user.name,
+    first_name: user.first_name,
+    last_name: user.last_name,
     _id: user.id,
     enrollment_number: user.enrollment_number
     // role: "student"
