@@ -13,6 +13,8 @@ class App {
   }
 
   private middleware(): void {
+    this.express.use(bodyParser.urlencoded({ extended: false }));
+
     this.express.use(bodyParser.json());
 
     this.express.use(cors());

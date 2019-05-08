@@ -102,8 +102,14 @@ export default (
   User.associate = (models: ModelsInterface): void => {
     User.hasMany(models.Ticket, {
       foreignKey: {
-        field: "tickets",
-        name: "tickets"
+        field: "owner",
+        name: "owner"
+      }
+    });
+    User.hasMany(models.Ticket, {
+      foreignKey: {
+        field: "buyer",
+        name: "buyer"
       }
     });
   };
