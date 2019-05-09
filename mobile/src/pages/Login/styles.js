@@ -6,7 +6,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "stretch",
-        paddingHorizontal: 65
+        paddingHorizontal: 65,
+        backgroundColor:'#E0E0E0'
     },
 
     logo:{

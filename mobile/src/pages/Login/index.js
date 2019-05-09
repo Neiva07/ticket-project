@@ -11,7 +11,7 @@ import logo from   '../../assets/logo.png';
 export default class Login extends Component {
     state = {
         matricula: '',
-        senha: ''
+        password: ''
     };
 
     // async componentDidMount (){ //Esse metodo verifica se o usuario ja ta logado
@@ -23,15 +23,14 @@ export default class Login extends Component {
     //     }
     // }
 
-    handleSignIn = async () => {
+    handleSignIn = () => {
         // const response = await api.get('perfil_do_aluno_noBD', {
         //     matricula: this.state.matricula,
         //     senha: this.state.password
         // })
 
         // await AsyncStorage.getItem('@ticket-project:PAGINA_DO_PERFIL_DOALUNO', response.data._id)
-        // this.props.navigation.navigate("PAGINA_DO_PERFIL_DOALUNO")
-        alert("Login efetuado")
+        this.props.navigation.navigate("Profile")
     };
   render() {
     return (
@@ -56,7 +55,7 @@ export default class Login extends Component {
                 secureTextEntry = {true}
                 autoCorrect={false}
                 value={this.state.password}
-                onChangeText={text => this.setState({ matricula: password})}
+                onChangeText={text => this.setState({ password: text})}
                 underlineColorAndroid="transparent"
 
             />
