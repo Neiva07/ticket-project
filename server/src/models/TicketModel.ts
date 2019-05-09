@@ -3,10 +3,10 @@ import { BaseModalInterface } from "../interfaces/BaseModalInterface";
 import { ModelsInterface } from "../interfaces/ModelsInterface";
 
 export interface TicketAttributes extends Sequelize.Model<TicketAttributes> {
-  readonly id: number;
-  readonly created_at: string;
-  readonly bought_by: number; //save only the id of the User.
-  readonly qr_code: string;
+  id: number;
+  created_at: string;
+  bought_by: number; //save only the id of the User.
+  qr_code: string;
   updated_at: string;
 }
 
@@ -54,8 +54,8 @@ export default (
   Ticket.associate = (models: ModelsInterface): void => {
     Ticket.belongsTo(models.User, {
       foreignKey: {
-        field: "user",
-        name: "user"
+        field: "owner",
+        name: "owner"
       }
     });
     Ticket.belongsTo(models.User, {

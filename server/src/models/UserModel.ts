@@ -108,8 +108,8 @@ export default (
     });
     User.hasMany(models.Ticket, {
       foreignKey: {
-        field: "buyer",
-        name: "buyer"
+        field: "bought_by",
+        name: "bought_by"
       }
     });
   };

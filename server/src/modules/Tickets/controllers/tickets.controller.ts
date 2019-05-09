@@ -5,8 +5,9 @@ import { HttpStatus } from "../../../utils/constants/httpStatus";
 import { Codes } from "../../../utils/constants/codes";
 import { TicketModel, TicketAttributes } from "../../../models/TicketModel";
 import { price } from "../../../utils/constants/payment";
+import UserModel from "../../../models/UserModel";
 
-export const index = async (res: Response, req: Request) => {
+export const index = async (req: Request, res: Response) => {
   const tickets = await db.Ticket.findAll({});
   if (tickets) {
     return responses.sendSuccessful(res, tickets, HttpStatus.OK);
@@ -20,16 +21,20 @@ export const index = async (res: Response, req: Request) => {
   }
 };
 
-export const createTickets = async (res: Response, req: Request) => {
+export const createTickets = async (req: Request, res: Response) => {
   const { payment } = req.body;
   const { user } = req;
-  const number_tickets = payment / price.meal;
-  const ticketArray = Array(number_tickets).fill({
-    owner: user,
-    bought_by: user
+  console.log(payment / price.meal);
+  const ticketsNumber = Math.ceil(payment / price.meal);
+  console.log(`\n number of tickets :${ticketsNumber} \n`);
+  const ticketArray = Array(ticketsNumber).fill({
+    owner: user.id,
+    bought_by: user.id
   });
+
   try {
     const tickets = await db.Ticket.bulkCreate(ticketArray);
+    // console.log(tickets);
 
     if (!tickets) {
       return responses.sendError(
@@ -40,7 +45,7 @@ export const createTickets = async (res: Response, req: Request) => {
       );
     }
 
-    responses.sendSuccessful(res, tickets, HttpStatus.OK);
+    return responses.sendSuccessful(res, tickets, HttpStatus.OK);
   } catch (error) {
     return responses.sendError(
       res,
@@ -77,3 +82,14 @@ export const getUserTickets = async (req: Request, res: Response) => {
     );
   }
 };
+
+// const findAllTickets = () => {
+//   return db.Ticket.findAll({
+//     include: [
+//       {
+//         model: db.User,
+//         where: { email: "lucas@g3efil.com" }
+//       }
+//     ]
+//   });
+// };

@@ -9,5 +9,7 @@ export default (app: Application) => {
     .get(tickets.getUserTickets)
     .post(tickets.createTickets);
 
+  app.route("/api/tickets").get(tickets.index);
+
   app.param("userId", users.userId);
 };
