@@ -4,7 +4,7 @@ import db from "./models";
 require("dotenv").config(".env");
 
 const server = http.createServer(app);
-const PORT = 3003;
+const PORT = 3000;
 db.sequelize.sync().then(() => {
   server.listen(PORT);
 

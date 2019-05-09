@@ -34,9 +34,10 @@ export default (
         defaultValue: DataTypes.UUIDV4
       },
       qr_code: {
-        type: DataTypes.STRING(128),
+        type: DataTypes.UUID,
         allowNull: false,
-        unique: true
+        unique: true,
+        defaultValue: DataTypes.UUIDV4
       }
     },
     {

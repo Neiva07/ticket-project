@@ -70,5 +70,6 @@ export enum Codes {
   /**
    * Tickets
    */
-  TICKET_NOT_FOUND = "ticket/not-found"
+  TICKET_NOT_FOUND = "ticket/not-found",
+  TICKET_NOT_CREATED = "ticket/not-created"
 }

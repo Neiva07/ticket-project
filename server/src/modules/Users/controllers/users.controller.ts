@@ -1,4 +1,4 @@
-import { Response, Request } from "express";
+import { Response, Request, NextFunction } from "express";
 import db from "../../../models/index";
 import * as ErrorHandler from "../../../utils/errorHandler";
 import * as responses from "../../../utils/formaters/responses";
@@ -28,5 +28,35 @@ export const read = async (req: Request, res: Response) => {
       status
     } = ErrorHandler.getErrorMessageCodeAndHttpStatus(err);
     return responses.sendError(res, code, message, status);
+  }
+};
+
+export const userId = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+  userId: string
+) => {
+  try {
+    const user = await db.User.findOne({ where: { id: userId } });
+
+    if (!user) {
+      responses.sendError(
+        res,
+        Codes.USER__NOT_FOUND,
+        "User not found",
+        HttpStatus.UNPROCESSABLE_ENTITY
+      );
+    } else {
+      req.user = user;
+    }
+    next();
+  } catch (err) {
+    return responses.sendError(
+      res,
+      Codes.UNKNOWN_ERROR,
+      "Something went wrong. Try again in a few minutes",
+      HttpStatus.INTERNAL_SERVER_ERROR
+    );
   }
 };

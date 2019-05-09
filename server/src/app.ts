@@ -1,5 +1,6 @@
 import * as express from "express";
 import userRoutes from "./modules/Users/routes/users.routes";
+import ticketRoutes from "./modules/Tickets/routes/tickets.routes";
 import * as cors from "cors";
 import * as bodyParser from "body-parser";
 
@@ -20,6 +21,7 @@ class App {
     this.express.use(cors());
 
     userRoutes(this.express);
+    ticketRoutes(this.express);
   }
 }
 
