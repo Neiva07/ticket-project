@@ -5,7 +5,7 @@ import { HttpStatus } from "../../../utils/constants/httpStatus";
 import { Codes } from "../../../utils/constants/codes";
 import { TicketModel, TicketAttributes } from "../../../models/TicketModel";
 import { price } from "../../../utils/constants/payment";
-import UserModel from "../../../models/UserModel";
+import { UserAttributes } from "../../../models/UserModel";
 
 export const index = async (req: Request, res: Response) => {
   const tickets = await db.Ticket.findAll({});
@@ -23,7 +23,7 @@ export const index = async (req: Request, res: Response) => {
 
 export const createTickets = async (req: Request, res: Response) => {
   const { payment } = req.body;
-  const { user } = req;
+  const user: UserAttributes = req.user;
   console.log(payment / price.meal);
   const ticketsNumber = Math.ceil(payment / price.meal);
   console.log(`\n number of tickets :${ticketsNumber} \n`);
