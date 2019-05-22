@@ -1,153 +1,150 @@
-import React  from 'react'
+import React from "react";
+import axios from "axios";
 
 export const AuthContext = React.createContext({});
+import AsyncStorage from "@react-native-community/async-storage";
 
-export class AuthProvider extends React.PureComponent{
+const HOST = "localhost:3000";
 
-    state = {
-        token : "",
+export class AuthProvider extends React.PureComponent {
+  state = {
+    token: "",
+    user: {},
+    isLogin: false
+  };
+
+  componentDidMount() {
+    this.hasValidToken();
+  }
+
+  hasValidToken = async () => {
+    const token = await AsyncStorage.getItem("@token");
+    if (!token) return;
+
+    const request = this.request(token);
+
+    try {
+      const response = await request("GET", "users/me");
+      if (response.success) {
+        const { user } = response.data;
+        if (user) {
+          this.setState({ user, token, isLogin: true });
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  login = async (enrollment_number, password, email) => {
+    const request = this.request();
+
+    const url = "auth/signin";
+
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await request("POST", url, {
+          enrollment_number,
+          password,
+          email
+        });
+        if (response.success) {
+          const { token, user } = response.data;
+
+          this.setState(
+            {
+              token,
+              user,
+              isLogin: true
+            },
+            async () => {
+              await AsyncStorage.setItem("@token", token);
+              resolve();
+            }
+          );
+        } else throw new Error("Falha no login.");
+      } catch (err) {
+        console.log(err);
+        reject();
+      }
+    });
+  };
+
+  logout = () => {
+    this.setState(
+      {
+        token: "",
         user: {},
-        isLogin: false,
-    }
+        isLogin: false
+      },
+      () => AsyncStorage.setItem("@token", "")
+    );
+  };
 
-    componentDidMount() {
-        this.hasValidToken();
-    }
+  //save image in another database in the future
+  signup = async userData => {
+    const request = this.request();
+    const url = "auth/signup";
 
-    hasValidToken = async () => {
-        const token = asyncStore.getItem('@token');
-        if(!token) return;
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await request("POST", url, userData);
+        if (response.success) {
+          resolve();
+        } else {
+          console.log(response);
+          reject();
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  };
 
-        const request = this.request(token);
+  request = savedToken => {
+    const token = savedToken || this.state.token;
+    const host = HOST;
+
+    return async (method, url, data) => {
+      const header = new Headers();
+      const options = { method };
+      header.append("Authorization", `JWT ${token}`);
+
+      const route = new URL(`${host}/${url}`);
+      //caso haja pesquisa um dia
+      if (method === "GET" && data) {
+        Object.keys(data).forEach(key =>
+          route.searchParams.append(key, data[key])
+        );
+      } else if (data) {
+        options["body"] = JSON.stringify(data);
+        header.append("Content-Type", "application/json");
+
+        options["headers"] = header;
+        console.log(route, route.href, options);
 
         try {
-            const response = await request("GET", "api/users/me");
-            if(response.success) {
-                const {user} = response.data;
-                if(user){
-                    this.setState({user, token, isLogin: true});
-                }
-            }
+          const requestPromise = await fetch(route.href, options).then(res =>
+            res.json()
+          );
+          return requestPromise;
+        } catch (err) {
+          console.log(err);
         }
-        catch(err){
-            console.log(err);
-            throw err;
-        }
-    }
+      }
+    };
+  };
 
-    login = async (enrollment_number, password, email) => {
-        const request = this.request();
-
-        const url = "api/auth/signin";
-
-        return new Promise((resolve, reject) => {
-            try {
-                const response  = await request("POST", url, {enrollment_number, password, email});
-                if(response.success){
-                    const {token, user} = response.data;
-
-                    this.setState(
-                        {
-                            token,
-                            user,
-                            isLogin: true
-                        }, 
-                        () => {
-                            asyncStore.setItem('@token', token);
-                            resolve(true);
-                        })
-                }
-
-                else throw new Error("Falha no login.");
-            }
-            catch(err){
-                console.log(err);
-                reject(false);
-                throw err;
-            }
-        })
-    }
-
-    logout = () => {
-        this.setState({
-            token: "",
-            user: {},
-            isLogin: false
-        },
-            () => asyncStore.setItem('@token', "")
-        )
-    }
-
-    //save image in another database in the future
-    signup = async (userData) => {
-        const request = this.request();
-        const url = "api/auth/signup"
-
-        return new Promise ((resolve, reject) => {
-            try {
-                const response = await request("POST", url, userData);
-                if(response.success) {
-                    resolve();
-                }
-                else {
-                    console.log(response);
-                    reject();
-                }
-            }
-            catch(err) {
-                console.log(err);
-                throw err;
-            }
-        })
-    }
-
-    request = (savedToken) => {
-        const token = savedToken || this.state.token;
-        const host = process.env.HOST;
-
-        return async (
-            method,
-            url,
-            data
-        ) => {
-            const header = new Headers();
-            header.append("Authorization", `JWT ${token}`);
-
-            const route = new URL(`${host}/${url}`)
-
-            //caso haja pesquisa um dia
-            if(method === "GET" && data) {
-                Object.keys(data).forEach(key => route.searchParams.append(key, data[key]))
-
-            }
-            else if(data) {
-                options["body"] = JSON.stringify(data);
-                header.append("Content-Type", "application/json");
-
-                options["headers"] = header;
-
-                try {
-                    const requestPromise = fetch(route.href, options).then(res => res.json());
-                    return await requestPromise;
-                }
-                catch(err){
-                    console.log(err);
-                    throw err;
-                }
-            }
-        }
-    }
-
-    render() {
-        const value = {
-            state: {...this.state},
-            action: {
-                login: this.login,
-                logout: this.logout,
-                signup: this.signup,
-                request: this.request()
-            }
-        }
-        return <AuthContext.Provider value={value} {...this.props} />
-    }
+  render() {
+    const value = {
+      state: { ...this.state },
+      action: {
+        login: this.login,
+        logout: this.logout,
+        signup: this.signup,
+        request: this.request()
+      }
+    };
+    return <AuthContext.Provider value={value} {...this.props} />;
+  }
 }
