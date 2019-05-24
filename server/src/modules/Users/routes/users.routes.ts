@@ -19,5 +19,8 @@ export default (app: Application) => {
 
   app.route("/auth/signup").post(validations.signup, authentication.signup);
   app.route("/auth/signin").post(validations.signin, authentication.signin);
+
+  app.route("/users/me").get(users.me);
+
   // app.param("userId", users.userById)
 };
