@@ -21,7 +21,8 @@ export default function Login() {
     action: { login }
   } = useContext(AuthContext);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
+    console.log(state.enrollment_number, state.password);
     login(state.enrollment_number, state.password);
   };
 

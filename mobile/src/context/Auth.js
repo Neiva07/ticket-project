@@ -1,10 +1,10 @@
 import React from "react";
-import axios from "axios";
+import AsyncStorage from "@react-native-community/async-storage";
+// import axios from "axios";
 
 export const AuthContext = React.createContext({});
-import AsyncStorage from "@react-native-community/async-storage";
 
-const HOST = "localhost:3000";
+const HOST = "http://192.168.1.104:3000";
 
 export class AuthProvider extends React.PureComponent {
   state = {
@@ -13,33 +13,40 @@ export class AuthProvider extends React.PureComponent {
     isLogin: false
   };
 
-  componentDidMount() {
-    this.hasValidToken();
-  }
+  // componentDidMount() {
+  //   this.hasValidToken();
+  // }
 
   hasValidToken = async () => {
     const token = await AsyncStorage.getItem("@token");
     if (!token) return;
 
     const request = this.request(token);
-
     try {
       const response = await request("GET", "users/me");
-      if (response.success) {
+      if (response) {
         const { user } = response.data;
         if (user) {
-          this.setState({ user, token, isLogin: true });
+          await this.setState({ user, token, isLogin: true }, () =>
+            console.log(this.state)
+          );
+          return true;
         }
+        return false;
       }
     } catch (err) {
       console.log(err);
+      return false;
     }
   };
 
-  login = async (enrollment_number, password, email) => {
+  login = (enrollment_number, password, email) => {
+    console.log("olaaaa");
     const request = this.request();
 
     const url = "auth/signin";
+
+    console.log("ola", enrollment_number, password);
 
     return new Promise(async (resolve, reject) => {
       try {
@@ -109,6 +116,7 @@ export class AuthProvider extends React.PureComponent {
       const header = new Headers();
       const options = { method };
       header.append("Authorization", `JWT ${token}`);
+      console.log(token, route);
 
       const route = new URL(`${host}/${url}`);
       //caso haja pesquisa um dia
@@ -119,18 +127,19 @@ export class AuthProvider extends React.PureComponent {
       } else if (data) {
         options["body"] = JSON.stringify(data);
         header.append("Content-Type", "application/json");
+      }
+      options["headers"] = header;
+      console.log(route, route.href, options);
 
-        options["headers"] = header;
-        console.log(route, route.href, options);
-
-        try {
-          const requestPromise = await fetch(route.href, options).then(res =>
-            res.json()
-          );
-          return requestPromise;
-        } catch (err) {
-          console.log(err);
-        }
+      try {
+        const requestPromise = await fetch(route.href, options).then(res => {
+          console.log(res);
+          return res.json();
+        });
+        console.log(requestPromise);
+        return requestPromise;
+      } catch (err) {
+        console.log(err);
       }
     };
   };
@@ -139,6 +148,7 @@ export class AuthProvider extends React.PureComponent {
     const value = {
       state: { ...this.state },
       action: {
+        hasValidToken: this.hasValidToken,
         login: this.login,
         logout: this.logout,
         signup: this.signup,
