@@ -66,13 +66,13 @@ export class AuthProvider extends React.PureComponent {
             },
             async () => {
               await AsyncStorage.setItem("@token", token);
-              resolve();
+              resolve(true);
             }
           );
         } else throw new Error("Falha no login.");
       } catch (err) {
         console.log(err);
-        reject();
+        reject(false);
       }
     });
   };

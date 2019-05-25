@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import {
   View,
@@ -14,16 +14,18 @@ import styles from "./styles";
 import logo from "../../assets/logo.png";
 import { AuthContext } from "../../context/Auth";
 
-export default function Login() {
+export default function Login(props) {
   const initialVal = { enrollment_number: "", password: "" };
   const [state, setState] = useState(initialVal);
   const {
+    state: { isLogin },
     action: { login }
   } = useContext(AuthContext);
 
   const handleLogin = async () => {
     console.log(state.enrollment_number, state.password);
-    login(state.enrollment_number, state.password);
+    const isLogged = await login(state.enrollment_number, state.password);
+    isLogged ? props.navigation.navigate("App") : null;
   };
 
   return (
