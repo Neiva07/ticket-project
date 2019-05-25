@@ -8,8 +8,8 @@ const AuthLoading = props => {
     action: { hasValidToken }
   } = useContext(AuthContext);
 
-  const redirect = () => {
-    props.navigation.navigate(hasValidToken() ? "App" : "Auth");
+  const redirect = async () => {
+    props.navigation.navigate((await hasValidToken()) ? "App" : "Auth");
   };
 
   useEffect(() => {
