@@ -13,7 +13,7 @@ const AuthLoading = props => {
   };
 
   useEffect(() => {
-    console.log(state);
+    console.log(state, "kkkkkkkkkkkkk");
     redirect();
   }, []);
 
