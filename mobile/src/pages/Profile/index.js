@@ -54,7 +54,7 @@ export default function Profile(props) {
       <TouchableOpacity
         style={styles.content}
         onPress={() => {
-          getTickets();
+          props.navigation.navigate("RedeemTicket");
         }}
       >
         <Image style={styles.ticketImage} source={Ticket} />

@@ -7,6 +7,7 @@ import {
 import Login from "./pages/Login/Indexhooks";
 import Profile from "./pages/Profile";
 import AuthLoadingScreen from "./pages/AuthLoading";
+import RedeemTicket from "./pages/RedeemTicket";
 
 // const AppStack = createStackNavigator({ Home: Profile /* add more*/ });
 // const AuthStack = createStackNavigator({ SignIn: Login });
@@ -16,7 +17,8 @@ const Routes = createAppContainer(
     {
       AuthLoading: AuthLoadingScreen,
       App: Profile,
-      Auth: Login
+      Auth: Login,
+      RedeemTicket
     },
     {
       initialRouteName: "AuthLoading"
