@@ -9,6 +9,7 @@ import * as jwt from "jsonwebtoken";
 import * as passport from "passport";
 import db from "../../models/index";
 import { ErrorHandler } from "../../interfaces/errorHandler";
+import { SafeUsers } from "../../interfaces/ModelsInterface";
 
 // Setup work and export for the JWT passport strategy
 export default function() {
@@ -35,7 +36,7 @@ export default function() {
   );
 }
 type ConfiguredUserAndToken = {
-  user: UserAttributes;
+  tokenUser: SafeUsers;
   token: string;
 };
 
@@ -57,7 +58,7 @@ export function configureUserAndToken(
 
   // return user and token
   return {
-    user,
+    tokenUser,
     token
   };
 }
