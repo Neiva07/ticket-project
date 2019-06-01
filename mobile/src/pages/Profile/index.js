@@ -61,7 +61,12 @@ export default function Profile(props) {
         <Text style={styles.contentText}>RESGATAR TICKETS</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.buyButton} onPress={() => {}}>
+      <TouchableOpacity
+        style={styles.buyButton}
+        onPress={() => {
+          props.navigation.navigate("Payment");
+        }}
+      >
         <Text style={styles.buyButtonText}>COMPRAR TICKETS</Text>
       </TouchableOpacity>
     </View>
