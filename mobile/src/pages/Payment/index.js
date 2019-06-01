@@ -2,48 +2,52 @@ import React, { useState, useRef } from "react";
 import QRcode from "react-native-qrcode";
 import styles from "../RedeemTicket/styles";
 
-import { WebView, View, Platform, Text } from "react-native";
+import { WebView, View, Platform, Text, Alert } from "react-native";
 const source = require("./paypal.html");
 
-const index = () => {
+const index = props => {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const webviewEl = useRef(null);
-  const [amount, setAmount] = useState(10);
-  const order = { id: 10 };
 
   const isAdroid = Platform.OS === "android";
-  //   const patchPostMessageJsCode =
-  //     "(" + String(patchPostMessageFunction) + ")();";
+
+  const patchPostMessageJsCode =
+    "(" + String(patchPostMessageFunction) + ")();";
 
   const handleMessage = event => {
     const data = event.nativeEvent.data;
+    console.log(data);
     const dataParsed = JSON.parse(data);
 
     if (dataParsed.status == "success") {
-      alert(dataParsed.reference);
+      console.log("success");
+      Alert.alert(
+        "Pagamento finalizado!",
+        dataParsed.message,
+        [{ text: "OK", onPress: () => props.navigation.navigate("App") }],
+        { cancelable: false }
+      );
     } else {
-      this.setState({ loading: false });
+      setLoading(false);
       alert("Failed, " + dataParsed.message);
     }
   };
 
-  //   const patchPostMessageFunction = () => {
-  //     const originalPostMessage = window.postMessage;
+  const patchPostMessageFunction = () => {
+    const originalPostMessage = window.postMessage;
 
-  //     const patchedPostMessage = (message, targetOrigin, transfer) => {
-  //       originalPostMessage(message, targetOrigin, transfer);
-  //     };
-
-  //     patchedPostMessage.toString = () => {
-  //       return String(Object.hasOwnProperty).replace(
-  //         "hasOwnProperty",
-  //         "postMessage"
-  //       );
-  //     };
-
-  //     window.postMessage = patchedPostMessage;
-  //   };
+    const patchedPostMessage = (message, targetOrigin, transfer) => {
+      originalPostMessage(message, targetOrigin, transfer);
+    };
+    patchedPostMessage.toString = () => {
+      return String(Object.hasOwnProperty).replace(
+        "hasOwnProperty",
+        "postMessage"
+      );
+    };
+    window.postMessage = patchedPostMessage;
+  };
 
   const monitoringNavigation = event => {
     console.log(event);
@@ -77,7 +81,7 @@ const index = () => {
         scrollEnabled={true}
         domStorageEnabled={true}
         startInLoadingState={true}
-        // injectedJavaScript={this.patchPostMessageJsCode}
+        injectedJavaScript={patchPostMessageJsCode}
         allowUniversalAccessFromFileURLs={true}
         onMessage={handleMessage}
         onNavigationStateChange={monitoringNavigation}
