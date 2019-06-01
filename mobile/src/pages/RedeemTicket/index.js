@@ -8,12 +8,6 @@ const index = () => {
     state: { tickets }
   } = useContext(TicketContext);
 
-  const randomTicket = () => {
-    const random = Math.random() * tickets.length;
-    console.log(ticket[random]);
-    return ticket[random];
-  };
-
   return (
     <View style={styles.container}>
       {tickets.length > 0 ? (
