@@ -73,6 +73,7 @@
                   message: `Transaction completed by ${
                     details.payer.name.given_name
                   }`,
+                  details,
                   status: "success"
                 })
               );
@@ -88,10 +89,12 @@
     }
     document.addEventListener("message", function(event) {
       const details = JSON.parse(event.data);
-      document.querySelector("p").innerText =
-        "You are about to fund your wallet with BRL " +
-        details.amount +
-        " on Tickets to RU. Click on any of the payment options to proceed. Your account will be credited instantly after payment.";
+      document.querySelector(
+        "p"
+      ).innerText = `Quase lá! \n Você vai fazer uma compra de ${
+        details.amount
+      } reais :). Escolha a forma de pagamento`;
+
       payWithPayPal(details.amount, details.orderID);
     });
   </script>

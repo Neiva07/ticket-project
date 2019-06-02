@@ -29,11 +29,34 @@ export class TicketProvider extends React.PureComponent {
     }
   };
 
+  createTickets = async data => {
+    const url = `api/users/${this.context.state.user.id}/tickets`;
+
+    try {
+      const response = await this.context.action.request("POST", url, {
+        purchase: data.details.purchase_units[0],
+        buyer: data.details.payer,
+        orderId: data.details.id,
+        created_at: data.details.created_at
+      });
+      if (response.success) {
+        const newTickets = response.data.tickets;
+        if (newTickets.length > 0) {
+          this.setState({ tickets: [...this.state.tickets, newTickets] });
+          console.log(response.data);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   render() {
     const value = {
       state: { ...this.state },
       action: {
-        getTickets: this.getTickets
+        getTickets: this.getTickets,
+        createTickets: this.createTickets
       }
     };
     return <TicketContext.Provider value={value} {...this.props} />;

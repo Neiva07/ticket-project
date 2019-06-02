@@ -47,7 +47,7 @@
   </div>
   <script>
     // Render the PayPal button into #paypal-button-container
-    function payWithPayPal(amount, orderID) {
+    function payWithPayPal(amount) {
       paypal
         .Buttons({
           // Set up the transaction
@@ -92,7 +92,7 @@
         "You are about to fund your wallet with BRL " +
         details.amount +
         " on Tickets to RU. Click on any of the payment options to proceed. Your account will be credited instantly after payment.";
-      payWithPayPal(details.amount, details.orderID);
+      payWithPayPal(details.amount);
     });
   </script>
 </body>
