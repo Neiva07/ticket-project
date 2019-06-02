@@ -35,6 +35,7 @@
     "@types/method-override": "^0.0.31",
     "@types/passport": "^1.0.0",
     "@types/passport-jwt": "^3.0.1",
+    "@types/paypal-rest-sdk": "^1.7.4",
     "@types/sequelize": "^4.27.48",
     "nodemon": "^1.18.11"
   }

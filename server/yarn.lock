@@ -118,6 +118,13 @@
   dependencies:
     "@types/express" "*"
 
+"@types/paypal-rest-sdk@^1.7.4":
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/@types/paypal-rest-sdk/-/paypal-rest-sdk-1.7.4.tgz#dd67b096dc5ea9beb4c1261c29c72a18e93dc944"
+  integrity sha512-/AzUYz0EgmyNl15qE24LqfO9K9Y5PYOsjPgO+Tc+iUPLYY/HndRUJt7yKzsKmXqmhbB7FHsSgDAB6jjfszvIeQ==
+  dependencies:
+    "@types/node" "*"
+
 "@types/range-parser@*":
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"

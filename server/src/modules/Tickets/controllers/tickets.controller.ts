@@ -22,10 +22,10 @@ export const index = async (req: Request, res: Response) => {
 };
 
 export const createTickets = async (req: Request, res: Response) => {
-  const { payment } = req.body;
+  const { purchase } = req.body;
   const user: UserAttributes = req.user;
-  console.log(payment / price.meal);
-  const ticketsNumber = Math.ceil(payment / price.meal);
+  console.log(purchase.amount.value / price.meal);
+  const ticketsNumber = Math.ceil(purchase.amount.value / price.meal);
   console.log(`\n number of tickets :${ticketsNumber} \n`);
   const ticketArray = Array(ticketsNumber).fill({
     owner: user.id,
