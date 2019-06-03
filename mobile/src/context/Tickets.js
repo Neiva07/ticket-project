@@ -40,7 +40,7 @@ export class TicketProvider extends React.PureComponent {
         created_at: data.details.created_at
       });
       if (response.success) {
-        const newTickets = response.data.tickets;
+        const newTickets = response.data;
         if (newTickets.length > 0) {
           this.setState({ tickets: [...this.state.tickets, newTickets] });
           console.log(response.data);

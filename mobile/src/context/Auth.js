@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 
 export const AuthContext = React.createContext({});
 
-const HOST = "http://192.168.1.104:3000";
+const HOST = "http://ticket-project.herokuapp.com";
 
 export class AuthProvider extends React.PureComponent {
   state = {
@@ -24,6 +24,7 @@ export class AuthProvider extends React.PureComponent {
     const request = this.request(token);
     try {
       const response = await request("GET", "users/me");
+      console.log(response);
       if (response) {
         const { user } = response.data;
         if (user) {
