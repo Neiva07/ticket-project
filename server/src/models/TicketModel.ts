@@ -8,6 +8,7 @@ export interface TicketAttributes extends Sequelize.Model<TicketAttributes> {
   bought_by: number; //save only the id of the User.
   qr_code: string;
   updated_at: string;
+  status: "valid" | "invalid";
 }
 
 export interface TicketInstance extends TicketAttributes {
@@ -38,6 +39,11 @@ export default (
         allowNull: false,
         unique: true,
         defaultValue: DataTypes.UUIDV4
+      },
+      status: {
+        type: DataTypes.STRING(128),
+        allowNull: false,
+        defaultValue: "valid"
       }
     },
     {
