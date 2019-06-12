@@ -1,10 +1,10 @@
 import React from "react";
-import axios from "axios";
+//import axios from "axios";
 
 export const AuthContext = React.createContext({});
 import AsyncStorage from "@react-native-community/async-storage";
 
-const HOST = "localhost:3000";
+const HOST = "192.168.56.1:3000";
 
 export class AuthProvider extends React.PureComponent {
   state = {

@@ -39,7 +39,7 @@ export default function Profile(){
                 style={ styles.content} 
                 //onPress={ () => {navegarpraporximarota ou abrir QRcode}}
             >
-                    <Image style={ styles.ticketImage} source={Ticket}/>
+                    <Image style={ styles.ticketImage} source={Ticket} resizeMode="contain"/>
                     <Text style={ styles.contentText}>RESGATAR TICKETS</Text>
             </TouchableOpacity>
 

@@ -10,11 +10,9 @@ const styles = StyleSheet.create({
 
     Top:{
         flexDirection: 'row',
-        //marginHorizontal: 40,
-        paddingBottom: 30,
-        alignItems: 'center',
-        alignSelf: 'center',
+        paddingHorizontal: 30,
         justifyContent: 'space-between',
+        paddingBottom: 30
     },
 
     content: {
@@ -27,8 +25,6 @@ const styles = StyleSheet.create({
         borderWidth: 1.5,
         borderRadius: 4,
         alignItems: "center",
-
-
     },
 
     logo:{
@@ -54,7 +50,6 @@ const styles = StyleSheet.create({
     buyButtonText: {
         fontSize: 18,
         color:"#015987"
-
     },
     
     ticketImage: {
