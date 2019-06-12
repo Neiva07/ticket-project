@@ -4,6 +4,8 @@ import * as ErrorHandler from "../../../utils/errorHandler";
 import * as responses from "../../../utils/formaters/responses";
 import { HttpStatus } from "../../../utils/constants/httpStatus";
 import { Codes } from "../../../utils/constants/codes";
+import { sanitizeUser } from "../../../utils/strategies/jwt";
+import { UserModel } from "../../../models/UserModel";
 
 export const read = async (req: Request, res: Response) => {
   console.log(req.body);
@@ -59,4 +61,18 @@ export const userId = async (
       HttpStatus.INTERNAL_SERVER_ERROR
     );
   }
+};
+
+interface RequestWithUser extends Request {
+  user: UserModel;
+}
+
+export const me = async (req: RequestWithUser, res: Response) => {
+  console.log(sanitizeUser(req.user));
+
+  return responses.sendSuccessful(
+    res,
+    { user: sanitizeUser(req.user) },
+    HttpStatus.OK
+  );
 };

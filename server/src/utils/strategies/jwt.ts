@@ -6,20 +6,22 @@ import {
 } from "../../models/UserModel";
 import { Strategy, ExtractJwt } from "passport-jwt";
 import * as jwt from "jsonwebtoken";
-import passport from "passport";
+import * as passport from "passport";
 import db from "../../models/index";
 import { ErrorHandler } from "../../interfaces/errorHandler";
+import { SafeUsers } from "../../interfaces/ModelsInterface";
 
 // Setup work and export for the JWT passport strategy
 export default function() {
   const opts = {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("JWT"),
     secretOrKey: process.env.SECRET_JWT
   };
   passport.use(
-    new Strategy(opts, (jwt_payload, done) =>
+    new Strategy(opts, (jwt_payload, done) => {
+      console.log(jwt_payload);
       db.User.findOne({ where: { id: jwt_payload._id } })
-        .then((user: UserInstance) => {
+        .then((user: UserModel) => {
           if (user) {
             return done(undefined, user.toJSON());
           } else {
@@ -29,12 +31,12 @@ export default function() {
         .catch((err: Error) => {
           console.log("return done(err, false);");
           return done(err, false);
-        })
-    )
+        });
+    })
   );
 }
 type ConfiguredUserAndToken = {
-  user: UserAttributes;
+  tokenUser: SafeUsers;
   token: string;
 };
 
@@ -56,7 +58,7 @@ export function configureUserAndToken(
 
   // return user and token
   return {
-    user,
+    tokenUser,
     token
   };
 }
@@ -65,6 +67,7 @@ export function handleJWTAuthentication(
   res: Response,
   next: NextFunction
 ) {
+  console.log(passport);
   passport.authenticate("jwt", { session: false }, function(
     err: ErrorHandler,
     user: UserModel,
@@ -77,3 +80,16 @@ export function handleJWTAuthentication(
     next();
   })(req, res, next);
 }
+
+export const sanitizeUser = (user: UserModel) => {
+  try {
+    // Remove sensitive data before login
+    const { password, ...safeUser } = user;
+    return safeUser;
+  } catch (err) {
+    if (err.message === "user.toJSON is not a function") {
+      const { password, ...safeUser } = user;
+      return safeUser;
+    }
+  }
+};

@@ -81,16 +81,19 @@ export const signup = [
   middlewareValidation
 ];
 export const signin = [
-  body("email")
-    .not()
-    .isEmpty()
-    .withMessage("should not be empty")
-    .isEmail()
-    .withMessage({
+  body("enrollment_number")
+    .matches(/^[0-9]+$/)
+    .withMessage(() => ({
       status: HttpStatus.UNPROCESSABLE_ENTITY,
-      code: Codes.AUTH__INVALID_EMAIL,
-      message: "The email you passed is not a valid one"
-    }),
+      code: Codes.AUTH__INVALID_ENROLLMENT_NUMBER,
+      message: "Must have only numbers"
+    }))
+    .isLength({ min: 12, max: 12 })
+    .withMessage(() => ({
+      status: HttpStatus.UNPROCESSABLE_ENTITY,
+      code: Codes.AUTH__INVALID_ENROLLMENT_NUMBER,
+      message: "Invalid Enrollment Number. The field must have 12 numbers."
+    })),
   // password must be at least 6 chars long
   body("password")
     .not()
