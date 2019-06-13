@@ -1,19 +1,11 @@
 import React from "react";
-<<<<<<< HEAD
-//import axios from "axios";
-=======
 import AsyncStorage from "@react-native-community/async-storage";
 // import axios from "axios";
->>>>>>> 50d468c4f3a9d48bdaf42849eb4599d5eb6f2dc4
 
 export const AuthContext = React.createContext({});
 
-<<<<<<< HEAD
-const HOST = "192.168.56.1:3000";
-=======
-// export const HOST = "http://ticket-project.herokuapp.com";
-export const HOST = "http://192.168.56.1:3000";
->>>>>>> 50d468c4f3a9d48bdaf42849eb4599d5eb6f2dc4
+export const HOST = "http://ticket-project.herokuapp.com";
+//export const HOST = "http://192.168.56.1:3000";
 
 export class AuthProvider extends React.PureComponent {
   state = {
