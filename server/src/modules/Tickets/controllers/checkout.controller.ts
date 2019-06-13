@@ -10,7 +10,7 @@ import * as socketIo from "socket.io";
 type Message = {
   status: "success" | "error";
 };
-
+//teste
 const checkTicket = (socket: socketIo.Socket) => {
   socket.on("ticketCheck", (id: string, msg: Message) => {
     socket.to(id).emit(msg.status);
