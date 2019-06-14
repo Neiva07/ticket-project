@@ -14,6 +14,8 @@ export class TicketProvider extends React.PureComponent {
   }
 
   getTickets = async () => {
+    console.log(this.context.state.user)
+
     const url = `api/users/${this.context.state.user.id}/tickets`;
 
     try {
@@ -30,6 +32,7 @@ export class TicketProvider extends React.PureComponent {
   };
 
   createTickets = async data => {
+    console.log(this.context.state.user)
     const url = `api/users/${this.context.state.user.id}/tickets`;
 
     try {

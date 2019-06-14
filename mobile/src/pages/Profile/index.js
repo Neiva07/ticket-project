@@ -18,6 +18,7 @@ export default function Profile(props) {
   const [isVisible, setIsVisible] = useState(false);
   const [ticketsQuantity, setTicketsQuantity] = useState(1);
   const {
+    state : {isLogin},
     action: { logout }
   } = useContext(AuthContext);
   const {
@@ -31,7 +32,7 @@ export default function Profile(props) {
   };
 
   useEffect(() => {
-    getTickets();
+     getTickets();
   }, []);
 
   return (

@@ -58,15 +58,15 @@ export class AuthProvider extends React.PureComponent {
           email
         });
         if (response.success) {
-          const { token, user } = response.data;
-
+          const { token, tokenUser } = response.data;
           this.setState(
             {
               token,
-              user,
+              user: tokenUser,
               isLogin: true
             },
             async () => {
+              console.log(this.state)
               await AsyncStorage.setItem("@token", token);
               resolve(true);
             }
