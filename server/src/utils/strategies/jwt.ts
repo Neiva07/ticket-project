@@ -50,7 +50,7 @@ export function configureUserAndToken(
     photo: user.photo,
     first_name: user.first_name,
     last_name: user.last_name,
-    _id: user.id,
+    id: user.id,
     enrollment_number: user.enrollment_number
     // role: "student"
   };
