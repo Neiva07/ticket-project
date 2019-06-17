@@ -7,6 +7,9 @@ import { handleJWTAuthentication } from "./utils/strategies/jwt";
 import * as cookieParser from "cookie-parser";
 import * as methodOverride from "method-override";
 require("dotenv").config(".env");
+import userRoutes from "./modules/Users/routes/users.routes";
+import ticketRoutes from "./modules/Tickets/routes/tickets.routes";
+import ticketCheckerRoutes from "./modules/Tickets/routes/ticketChecker.routes";
 
 import jwt from "./utils/strategies/jwt";
 
@@ -18,6 +21,7 @@ class App {
 
     this.init();
     this.express.use(handleJWTAuthentication);
+    this.router();
   }
 
   private init() {
@@ -29,6 +33,12 @@ class App {
     this.express.use(cors());
     this.express.use(passport.initialize());
     jwt();
+  }
+
+  private router() {
+    userRoutes(this.express);
+    ticketRoutes(this.express);
+    ticketCheckerRoutes(this.express);
   }
 }
 
