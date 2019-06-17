@@ -6,7 +6,6 @@ import { Codes } from "../../../utils/constants/codes";
 import { TicketModel, TicketAttributes } from "../../../models/TicketModel";
 import { price } from "../../../utils/constants/payment";
 import { UserAttributes } from "../../../models/UserModel";
-import socketIo from "socket.io";
 
 export const index = async (req: Request, res: Response) => {
   const tickets = await db.Ticket.findAll({});
@@ -63,7 +62,7 @@ export const getUserTickets = async (req: Request, res: Response) => {
 
   try {
     const tickets = await db.Ticket.findAll({
-      where: { owner: user.id }
+      where: { owner: user.id, status: "valid" }
     });
     // console.log(tickets);
     if (!tickets) {
@@ -108,11 +107,6 @@ const checkTicket = async (req: Request, res: Response) => {
     ticket.update({
       status: "invalid"
     });
-
-    // socket.on("ticketCheck", (id: string, msg: Message) => {
-    //   socket.to(id).emit(msg.status);
-    // });
-    
   } catch (error) {
     return responses.sendError(
       res,

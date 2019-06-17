@@ -82,7 +82,6 @@ export const signin = async (req: Request, res: Response) => {
   }
 };
 export const read = async (res: Response, req: Request) => {
-  console.log(req.body);
   try {
     const user = await db.User.findOne({
       where: { enrollment_number: req.body.enrollment_number }

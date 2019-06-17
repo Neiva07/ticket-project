@@ -19,7 +19,6 @@ export default function() {
   };
   passport.use(
     new Strategy(opts, (jwt_payload, done) => {
-      console.log(jwt_payload);
       db.User.findOne({ where: { id: jwt_payload._id } })
         .then((user: UserModel) => {
           if (user) {
@@ -67,7 +66,6 @@ export function handleJWTAuthentication(
   res: Response,
   next: NextFunction
 ) {
-  console.log(passport);
   passport.authenticate("jwt", { session: false }, function(
     err: ErrorHandler,
     user: UserModel,

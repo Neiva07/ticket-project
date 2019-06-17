@@ -8,7 +8,6 @@ import { sanitizeUser } from "../../../utils/strategies/jwt";
 import { UserModel } from "../../../models/UserModel";
 
 export const read = async (req: Request, res: Response) => {
-  console.log(req.body);
   try {
     const user = await db.User.findOne({
       where: { enrollment_number: req.body.enrollment_number }
@@ -68,7 +67,6 @@ interface RequestWithUser extends Request {
 }
 
 export const me = async (req: RequestWithUser, res: Response) => {
-  console.log(sanitizeUser(req.user));
 
   return responses.sendSuccessful(
     res,
