@@ -15,7 +15,7 @@ import logo from "../../assets/logo.png";
 import { AuthContext } from "../../context/Auth";
 
 export default function Login(props) {
-  const initialVal = { enrollment_number: "", password: "" };
+  const initialVal = { enrollment_number: "111111111111", password: "123456" };
   const [state, setState] = useState(initialVal);
   const {
     state: { isLogin },
