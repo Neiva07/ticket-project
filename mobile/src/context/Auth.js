@@ -28,7 +28,7 @@ export class AuthProvider extends React.PureComponent {
       console.log(response);
       if (response) {
         const { tokenUser } = response.data;
-        if (user) {
+        if (tokenUser) {
           await this.setState({ user: tokenUser, token, isLogin: true }, () =>
             console.log(this.state)
           );

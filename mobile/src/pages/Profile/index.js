@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 
-import { View, TouchableOpacity, Text, Image } from "react-native";
+import { View, TouchableOpacity, Text, Image, Alert } from "react-native";
 import NumericInput from "react-native-numeric-input";
 
 import styles from "./styles";
@@ -14,11 +14,10 @@ import Modal from "react-native-modal";
 import { Button } from "react-native-elements";
 
 export default function Profile(props) {
-  const [Dadosdoaluno, SetDadosdoaluno] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
   const [ticketsQuantity, setTicketsQuantity] = useState(1);
   const {
-    state : {isLogin},
+    state: { user },
     action: { logout }
   } = useContext(AuthContext);
   const {
@@ -32,8 +31,20 @@ export default function Profile(props) {
   };
 
   useEffect(() => {
-     getTickets();
+    getTickets();
   }, []);
+
+  const handleRedeemTicket = useCallback(() => {
+    if (tickets.length > 0) props.navigation.navigate("RedeemTicket");
+    else {
+      Alert.alert(
+        "Você Nāo possui tickets no momento",
+        "Tente comprar mais e tentar novamente :)",
+        [{ text: "OK", onPress: () => {} }],
+        { cancelable: false }
+      );
+    }
+  }, [tickets]);
 
   return (
     <View style={styles.container}>
@@ -43,16 +54,11 @@ export default function Profile(props) {
         </TouchableOpacity>
         <Image style={styles.logo} source={logo} />
       </View>
-      <Text style={styles.nameText}>Olá {Dadosdoaluno.primeironome}!</Text>
+      <Text style={styles.nameText}>Olá {user.first_name}!</Text>
       <Text style={styles.ticketText}>
         Você tem {tickets.length} Tickets no momento.
       </Text>
-      <TouchableOpacity
-        style={styles.content}
-        onPress={() => {
-          props.navigation.navigate("RedeemTicket");
-        }}
-      >
+      <TouchableOpacity style={styles.content} onPress={handleRedeemTicket}>
         <Image style={styles.ticketImage} source={Ticket} />
         <Text style={styles.contentText}>RESGATAR TICKETS</Text>
       </TouchableOpacity>
@@ -61,7 +67,6 @@ export default function Profile(props) {
         style={styles.buyButton}
         onPress={() => {
           setIsVisible(true);
-          // props.navigation.navigate("Payment");
         }}
       >
         <Text style={styles.buyButtonText}>COMPRAR TICKETS</Text>
