@@ -18,9 +18,15 @@ export const checkoutTicket = async (
   const { qr_code } = req.body;
 
   try {
-    redisClient.get(qr_code, (err, socketId) =>
-      io.to(socketId).emit("ticketChecker", { response: "success" })
-    );
+    console.log(qr_code);
+
+    await redisClient.hmget("qrCodeSocket", qr_code, (err, socketId) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log("reach out here!", socketId[0]);
+      io.to(socketId[0]).emit("ticketChecker", { response: "success" });
+    });
 
     const validTicket = await db.Ticket.findOne({
       where: { qr_code: qr_code, status: "valid" }
