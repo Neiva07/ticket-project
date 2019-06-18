@@ -27,9 +27,9 @@ export class AuthProvider extends React.PureComponent {
       const response = await request("GET", "users/me");
       console.log(response);
       if (response) {
-        const { tokenUser } = response.data;
-        if (tokenUser) {
-          await this.setState({ user: tokenUser, token, isLogin: true }, () =>
+        const { user } = response.data;
+        if (user) {
+          await this.setState({ user, token, isLogin: true }, () =>
             console.log(this.state)
           );
           return true;
@@ -58,11 +58,11 @@ export class AuthProvider extends React.PureComponent {
           email
         });
         if (response.success) {
-          const { token, tokenUser } = response.data;
+          const { token, user } = response.data;
           this.setState(
             {
               token,
-              user: tokenUser,
+              user,
               isLogin: true
             },
             async () => {
