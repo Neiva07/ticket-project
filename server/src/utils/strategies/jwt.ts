@@ -71,7 +71,6 @@ export function handleJWTAuthentication(
     user: UserModel,
     info
   ) {
-    console.log(user);
     req.user = user;
     if (info) {
       req.err = info.message;
@@ -90,6 +89,5 @@ export const sanitizeUser = (user: UserModel) => {
       const { password, ...safeUser } = user;
       return safeUser;
     }
-    console.log(user);
   }
 };
