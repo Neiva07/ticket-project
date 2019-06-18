@@ -67,7 +67,7 @@ interface RequestWithUser extends Request {
 }
 
 export const me = async (req: RequestWithUser, res: Response) => {
-
+  console.log(sanitizeUser(req.user));
   return responses.sendSuccessful(
     res,
     { user: sanitizeUser(req.user) },

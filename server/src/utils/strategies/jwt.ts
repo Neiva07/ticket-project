@@ -19,7 +19,7 @@ export default function() {
   };
   passport.use(
     new Strategy(opts, (jwt_payload, done) => {
-      db.User.findOne({ where: { id: jwt_payload._id } })
+      db.User.findOne({ where: { id: jwt_payload.id } })
         .then((user: UserModel) => {
           if (user) {
             return done(undefined, user.toJSON());
@@ -35,7 +35,7 @@ export default function() {
   );
 }
 type ConfiguredUserAndToken = {
-  tokenUser: SafeUsers;
+  user: SafeUsers;
   token: string;
 };
 
@@ -57,7 +57,7 @@ export function configureUserAndToken(
 
   // return user and token
   return {
-    tokenUser,
+    user: { ...tokenUser },
     token
   };
 }
@@ -71,6 +71,7 @@ export function handleJWTAuthentication(
     user: UserModel,
     info
   ) {
+    console.log(user);
     req.user = user;
     if (info) {
       req.err = info.message;
@@ -89,5 +90,6 @@ export const sanitizeUser = (user: UserModel) => {
       const { password, ...safeUser } = user;
       return safeUser;
     }
+    console.log(user);
   }
 };
