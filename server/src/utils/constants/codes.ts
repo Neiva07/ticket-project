@@ -71,5 +71,11 @@ export enum Codes {
    * Tickets
    */
   TICKET_NOT_FOUND = "ticket/not-found",
-  TICKET_NOT_CREATED = "ticket/not-created"
+  TICKET_NOT_CREATED = "ticket/not-created",
+
+  /**
+   * Redis
+   */
+
+  REDIS__MISSING_DATA = "redis/missing-data"
 }

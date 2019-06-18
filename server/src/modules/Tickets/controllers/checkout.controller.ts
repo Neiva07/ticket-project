@@ -23,19 +23,32 @@ export const checkoutTicket = async (
     await redisClient.hmget("qrCodeSocket", qr_code, (err, socketId) => {
       if (err) {
         console.log(err);
+        return responses.sendError(
+          res,
+          Codes.REDIS__MISSING_DATA,
+          "there isn't a ticket request with this QR Code right now",
+          HttpStatus.UNPROCESSABLE_ENTITY
+        );
       }
-      console.log("reach out here!", socketId[0]);
       io.to(socketId[0]).emit("ticketChecker", { response: "success" });
     });
 
     const validTicket = await db.Ticket.findOne({
       where: { qr_code: qr_code, status: "valid" }
     });
-    await validTicket.update({
-      status: "invalid"
-    });
+    if (validTicket) {
+      await validTicket.update({
+        status: "invalid"
+      });
 
-    responses.sendSuccessful(res, validTicket, HttpStatus.OK);
+      responses.sendSuccessful(res, validTicket, HttpStatus.OK);
+    }
+    responses.sendError(
+      res,
+      Codes.TICKET_NOT_FOUND,
+      "Ticket not found",
+      HttpStatus.UNPROCESSABLE_ENTITY
+    );
   } catch (error) {
     return responses.sendError(
       res,

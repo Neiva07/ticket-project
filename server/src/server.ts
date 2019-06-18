@@ -1,15 +1,11 @@
 import * as http from "http";
+import * as socketIo from "socket.io";
+import * as redis from "redis";
 import app from "./app";
 import db from "./models";
 import socketManager from "./config/socket.config";
-import * as socketIo from "socket.io";
-// import * as redisStore from "connect-redis";
-import * as redis from "redis";
-import * as session from "express-session";
 
 export const redisClient = redis.createClient();
-
-redisClient.on("connect", () => console.log("Redis client connected"));
 
 const server = http.createServer(app);
 
