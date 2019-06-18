@@ -20,6 +20,7 @@ const index = props => {
 
   socket.on("ticketChecker", data => {
     console.log(data.response, "status");
+    socket.disconnect(true);
     props.navigation.navigate("App");
   });
 

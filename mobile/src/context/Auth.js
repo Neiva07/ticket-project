@@ -27,9 +27,9 @@ export class AuthProvider extends React.PureComponent {
       const response = await request("GET", "users/me");
       console.log(response);
       if (response) {
-        const { user } = response.data;
+        const { tokenUser } = response.data;
         if (user) {
-          await this.setState({ user, token, isLogin: true }, () =>
+          await this.setState({ user: tokenUser, token, isLogin: true }, () =>
             console.log(this.state)
           );
           return true;
@@ -66,7 +66,7 @@ export class AuthProvider extends React.PureComponent {
               isLogin: true
             },
             async () => {
-              console.log(this.state)
+              console.log(this.state);
               await AsyncStorage.setItem("@token", token);
               resolve(true);
             }
@@ -118,9 +118,9 @@ export class AuthProvider extends React.PureComponent {
       const header = new Headers();
       const options = { method };
       header.append("Authorization", `JWT ${token}`);
-      console.log(token, route);
 
       const route = new URL(`${host}/${url}`);
+      console.log(token, route);
       //caso haja pesquisa um dia
       if (method === "GET" && data) {
         Object.keys(data).forEach(key =>
