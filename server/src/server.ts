@@ -3,7 +3,7 @@ import * as socketIo from "socket.io";
 import * as redis from "redis";
 import app from "./app";
 import db from "./models";
-import socketManager from "./config/socket.config";
+import socketManager from "./utils/socketManager";
 
 export const redisClient = redis.createClient();
 
