@@ -39,7 +39,7 @@ export default function Profile(props) {
     else {
       Alert.alert(
         "Você Nāo possui tickets no momento",
-        "Tente comprar mais e tentar novamente :)",
+        "Compre mais e tente novamente :)",
         [{ text: "OK", onPress: () => {} }],
         { cancelable: false }
       );

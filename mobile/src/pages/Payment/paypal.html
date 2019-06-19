@@ -89,9 +89,9 @@
     document.addEventListener("message", function(event) {
       const details = JSON.parse(event.data);
       document.querySelector("p").innerText =
-        "You are about to fund your wallet with BRL " +
+        "Você está prestes a gastar R$" +
         details.amount +
-        " on Tickets to RU. Click on any of the payment options to proceed. Your account will be credited instantly after payment.";
+        " em Tickets para o R.U. Escalha o método de pagamento para continuar o pagamento.";
       payWithPayPal(details.amount);
     });
   </script>
