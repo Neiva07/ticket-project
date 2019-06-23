@@ -30,19 +30,20 @@ const index = props => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.top}>
-        <TouchableOpacity style={styles.outButton} onPress={handleBack}>
-          <Text style={styles.outText}>Voltar</Text>
-        </TouchableOpacity>
-      </View>
+      <Text 
+      style={{fontSize: 20, textAlign:"center", fontWeight: "bold", marginBottom: 20, color:"#000"}}>
+        Aproxime do leitor o código abaixo para resgatar seu ticket!</Text>
       {tickets.length > 0 ? (
         <QRcode
           value={tickets[0].qr_code}
-          size={200}
+          size={250}
           bgColor="#015987"
           fgColor="white"
         />
       ) : null}
+        <TouchableOpacity style={styles.outButton} onPress={handleBack}>
+          <Text style={styles.outText}>Cancelar</Text>
+        </TouchableOpacity>
     </View>
   );
 };

@@ -72,7 +72,7 @@ export default class Login extends Component {
         </TouchableOpacity>
 
         <View style={styles.bottom}>
-          <TouchableOpacity onPress={() => []} style={styles.createAccount}>
+          <TouchableOpacity onPress={() => {props.navigation.navigate("Signup")}} style={styles.createAccount}>
             <Text style={styles.createAccountText}>Cadastre-se</Text>
           </TouchableOpacity>
         </View>

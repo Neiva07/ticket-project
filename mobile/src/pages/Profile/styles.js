@@ -5,28 +5,27 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     backgroundColor: "#E0E0E0",
-    alignItems: "center"
   },
 
   Top: {
     flexDirection: "row",
-    //marginHorizontal: 40,
-    paddingBottom: 30,
-    alignItems: "center",
-    alignSelf: "center",
-    justifyContent: "space-between"
+    marginBottom: 40,
+    justifyContent: "space-between",
+    marginHorizontal: 30,
+    alignContent: "center"
+
   },
 
   content: {
-    flex: 1,
     maxHeight: 300,
+    width: 300,
     backgroundColor: "#F5F5F5",
-    //margin: 0,
     borderColor: "#015987",
-    marginHorizontal: 30,
-    borderWidth: 1.5,
-    borderRadius: 4,
-    alignItems: "center"
+    borderWidth: 2,
+    borderRadius: 5,
+    alignItems: "center",
+    alignSelf: "center",
+
   },
   instructions: {
     textAlign: "center",
@@ -44,8 +43,8 @@ const styles = StyleSheet.create({
     borderColor: "#015987",
     backgroundColor: "#F5F5F5",
     marginHorizontal: 20,
-    borderWidth: 1.5,
-    borderRadius: 4,
+    borderWidth: 2,
+    borderRadius: 5,
     height: 50,
     width: "65%",
     alignItems: "center",
@@ -55,7 +54,8 @@ const styles = StyleSheet.create({
   },
   buyButtonText: {
     fontSize: 18,
-    color: "#015987"
+    color: "#015987",
+    fontWeight: "bold"
   },
 
   ticketImage: {
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   contentText: {
     fontSize: 16,
     color: "#015987",
-    //fontWeight: "bold",
+    fontWeight: "bold",
     marginTop: 15
   },
 
@@ -88,15 +88,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#212121",
     //fontWeight: "bold",
-    marginHorizontal: 30,
-    marginBottom: 7.5
+    marginBottom: 7.5,
+    textAlign: "center"
   },
 
   nameText: {
     fontSize: 18,
     color: "#212121",
     fontWeight: "bold",
-    marginHorizontal: 30
+    textAlign: "center"
   },
 
   outText: {
@@ -104,9 +104,6 @@ const styles = StyleSheet.create({
     color: "#015987"
     //paddingRight: 10,
   },
-  outButton: {
-    marginRight: 120
-  }
 });
 
 export default styles;

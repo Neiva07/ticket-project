@@ -52,14 +52,14 @@ export default function Profile(props) {
         <TouchableOpacity style={styles.outButton} onPress={handleLogout}>
           <Text style={styles.outText}>Sair</Text>
         </TouchableOpacity>
-        <Image style={styles.logo} source={logo} />
+        <Image source={logo} />
       </View>
       <Text style={styles.nameText}>Olá {user.first_name}!</Text>
       <Text style={styles.ticketText}>
-        Você tem {tickets.length} Tickets no momento.
+        Você tem <Text style={{fontWeight:"bold"}}>{tickets.length} </Text>Tickets no momento.
       </Text>
       <TouchableOpacity style={styles.content} onPress={handleRedeemTicket}>
-        <Image style={styles.ticketImage} source={Ticket} />
+        <Image style={styles.ticketImage} source={Ticket} resizeMode="contain" />
         <Text style={styles.contentText}>RESGATAR TICKETS</Text>
       </TouchableOpacity>
 

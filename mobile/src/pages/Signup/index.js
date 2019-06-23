@@ -2,7 +2,13 @@ import React from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import styles from './styles';
 
-export default function Signup() {
+
+export default function Signup(props) {
+
+     const handleBack =() => {
+     props.navigation.navigate("AuthLoading");
+    }
+
   return (
     <View style={styles.container}>
         <View style= {styles.top}>
@@ -33,8 +39,8 @@ export default function Signup() {
         <TouchableOpacity style={styles.signbutton}>
             <Text style={styles.signtext}>Efetuar Cadastro</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}}>
-            <Text style={{alignSelf: "center", paddingTop: 12}}>Cancelar</Text>
+        <TouchableOpacity onPress={handleBack}>
+            <Text style={{alignSelf: "center", marginTop: 12}}>Cancelar</Text>
         </TouchableOpacity>
     </View>
   );

@@ -9,7 +9,7 @@ import Profile from "./pages/Profile";
 import AuthLoadingScreen from "./pages/AuthLoading";
 import RedeemTicket from "./pages/RedeemTicket";
 import Payment from "./pages/Payment";
-
+import Signup from "./pages/Signup"
 // const AppStack = createStackNavigator({ Home: Profile /* add more*/ });
 // const AuthStack = createStackNavigator({ SignIn: Login });
 
@@ -20,7 +20,8 @@ const Routes = createAppContainer(
       App: Profile,
       Auth: Login,
       Payment,
-      RedeemTicket
+      RedeemTicket,
+      Signup
     },
     {
       initialRouteName: "AuthLoading"

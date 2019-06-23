@@ -69,6 +69,10 @@ const styles = StyleSheet.create({
         //bottom:0
     },
 
+    buttonCadastro:{
+        alignSelf:"center",
+        marginTop: 10
+    },
 
     createAccountText:{
         fontSize: 16,

@@ -28,6 +28,10 @@ export default function Login(props) {
     isLogged ? props.navigation.navigate("App") : null;
   };
 
+  const goToSignUp = () =>{
+    props.navigation.navigate("Signup")
+  }
+
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={logo} />
@@ -54,11 +58,11 @@ export default function Login(props) {
         <Text style={styles.buttonText}>Logar-se</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => []}>
+      {/* <TouchableOpacity onPress={() => []}>
         <Text>Esqueceu a senha?</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
-      <TouchableOpacity onPress={() => []} style={styles.buttonCadastro}>
+      <TouchableOpacity onPress={goToSignUp} style={styles.buttonCadastro}>
         <Text>Cadastre-se</Text>
       </TouchableOpacity>
     </View>
