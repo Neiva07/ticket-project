@@ -55,7 +55,8 @@ const styles = StyleSheet.create({
   buyButtonText: {
     fontSize: 18,
     color: "#015987",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    textAlign: "center"
   },
 
   ticketImage: {
