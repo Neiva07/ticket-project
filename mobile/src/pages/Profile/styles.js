@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "#E0E0E0",
+    backgroundColor: "#E0E0E0"
   },
 
   Top: {
@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginHorizontal: 30,
     alignContent: "center"
-
   },
 
   content: {
@@ -24,8 +23,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 5,
     alignItems: "center",
-    alignSelf: "center",
-
+    alignSelf: "center"
   },
   instructions: {
     textAlign: "center",
@@ -44,13 +42,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5F5F5",
     marginHorizontal: 20,
     borderWidth: 2,
-    borderRadius: 5,
+    borderRadius: 8,
     height: 50,
+    position: "absolute",
     width: "65%",
     alignItems: "center",
-    alignSelf: "center",
     marginTop: 50,
-    justifyContent: "center"
+    justifyContent: "center",
+    bottom: 0,
+    left: 0,
+    right: 0
   },
   buyButtonText: {
     fontSize: 18,
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#015987"
     //paddingRight: 10,
-  },
+  }
 });
 
 export default styles;
