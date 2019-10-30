@@ -44,7 +44,7 @@ const index = props => {
     <View style={styles.container}>
       <Text
         style={{
-          fontSize: 20,
+          fontSize: 24,
           textAlign: "center",
           fontWeight: "bold",
           marginBottom: 20,
@@ -56,7 +56,7 @@ const index = props => {
       {tickets.length > 0 ? (
         <QRcode
           value={tickets[0].qr_code}
-          size={250}
+          size={200}
           bgColor="#015987"
           fgColor="white"
         />
